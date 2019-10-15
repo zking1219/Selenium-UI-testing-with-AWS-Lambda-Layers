@@ -3,7 +3,18 @@
   "Description": "The AWS CloudFormation template for this Serverless application",
   "Resources": {
     "ServerlessDeploymentBucket": {
-      "Type": "AWS::S3::Bucket"
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        }
+      }
     },
     "HelloLogGroup": {
       "Type": "AWS::Logs::LogGroup",
@@ -52,7 +63,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/selenium-lambda-dev-hello:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/selenium-lambda-dev*:*"
                     }
                   ]
                 },
@@ -63,7 +74,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/selenium-lambda-dev-hello:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/selenium-lambda-dev*:*:*"
                     }
                   ]
                 }
@@ -78,7 +89,9 @@
             [
               "selenium-lambda",
               "dev",
-              "ap-southeast-2",
+              {
+                "Ref": "AWS::Region"
+              },
               "lambdaRole"
             ]
           ]
@@ -92,7 +105,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/selenium-lambda/dev/1547610682694-2019-01-16T03:51:22.694Z/selenium-lambda.zip"
+          "S3Key": "serverless/selenium-lambda/dev/1571076609847-2019-10-14T18:10:09.847Z/selenium-lambda.zip"
         },
         "FunctionName": "selenium-lambda-dev-hello",
         "Handler": "handler.hello",
@@ -103,11 +116,11 @@
             "Arn"
           ]
         },
-        "Runtime": "python3.6",
+        "Runtime": "python3.7",
         "Timeout": 900,
         "Layers": [
-          "arn:aws:lambda:ap-southeast-2:687416365397:layer:selenium:32",
-          "arn:aws:lambda:ap-southeast-2:687416365397:layer:chromedriver:13"
+          "arn:aws:lambda:ap-southeast-2:929207060866:layer:selenium:8",
+          "arn:aws:lambda:ap-southeast-2:929207060866:layer:chromedriver:8"
         ]
       },
       "DependsOn": [
@@ -115,7 +128,7 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "HelloLambdaVersionhPN0gscNhYCtCQfiOZ8ilfVqsB4yHYtcNmjgUL3oQg": {
+    "HelloLambdaVersionVFm4RsDm2CzhCvfmSKwINyUo7zkeySjjEKrp6eUlMJ8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
@@ -135,7 +148,7 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionhPN0gscNhYCtCQfiOZ8ilfVqsB4yHYtcNmjgUL3oQg"
+        "Ref": "HelloLambdaVersionVFm4RsDm2CzhCvfmSKwINyUo7zkeySjjEKrp6eUlMJ8"
       }
     }
   }

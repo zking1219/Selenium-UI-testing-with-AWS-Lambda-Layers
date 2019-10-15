@@ -4,7 +4,7 @@ service: selenium-layer
 
 provider:
   name: aws
-  runtime: python3.6
+  runtime: python3.7
   region: ap-southeast-2
   timeout: 900
 
@@ -12,13 +12,13 @@ layers:
   selenium:
     path: selenium
     CompatibleRuntimes: [
-      "python3.6"
+      "python3.7"
     ]
   chromedriver:
     path: chromedriver
     description: chrome driver layer
     CompatibleRuntimes: [
-      "python3.6"
+      "python3.7"
     ]
 resources:
   Outputs:
